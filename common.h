@@ -64,6 +64,13 @@ typedef struct
 	LiteralType lType;
 
 	//how to put the literal value?
+	//from pseudo-code, possible forms of input
+	//joe- added char, is that right?
+	int intValue;
+	float floatValue;
+	char* stringValue;
+	char charValue;
+
 	TokenCode tCode;
 	//for the linked list
 	struct Token next*;
