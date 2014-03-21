@@ -72,7 +72,7 @@ typedef struct
 	char charValue;
 
 	TokenCode tCode;
-	//for the linked list
+	//for the linked list, holds the node pointer
 	struct Token next*;
 }
 Token;
