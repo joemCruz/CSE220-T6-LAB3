@@ -60,7 +60,13 @@ LiteralType;
  ***************/
 typedef struct
 {
-    //Missing code goes here
+    //Missing code goes here//
+	LiteralType lType;
+
+	//how to put the literal value?
+	TokenCode tCode;
+	//for the linked list
+	struct Token next*;
 }
 Token;
 
