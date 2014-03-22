@@ -22,6 +22,9 @@
 #define MAX_LINES_PER_PAGE      50
 #define DATE_STRING_LENGTH      26
 
+//decent line --joe
+#define DECENT_LINE_LENGTH	25
+
 typedef enum
 {
     FALSE, TRUE,
@@ -61,20 +64,21 @@ LiteralType;
 typedef struct
 {
     //Missing code goes here//
-	LiteralType lType;
+	
 
 	//how to put the literal value?
 	//from pseudo-code, possible forms of input
-	//joe- added char, is that right?
+	
 	int intValue;
-	float floatValue;
+	float realValue;
 	char* stringValue;
-	char charValue;
-
+	
+	//these are the enums from above	
+	LiteralType lType;
 	TokenCode tCode;
-	//for the linked list, holds the node pointer
+	/*for the linked list, holds the node pointer to next, if next 		node is empty, points to null*/
 	struct Token next*;
 }
-Token;
+Token; 
 
 #endif

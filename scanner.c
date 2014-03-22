@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 #include "scanner.h"
+#include "ctype.h"
 
 /*******************
  Static functions needed for the scanner
@@ -49,7 +50,8 @@ RwStruct;
 
 const RwStruct rw_table[9][10] = {
     {{"do",DO},{"if",IF},{"in",IN},{"of",OF},{"or",OR},{"to",TO},{NULL,0}}, //Reserved words of size 2
-    {{"and",AND},{"div",DIV},{"end",END},{"for",FOR},{"mod",MOD},{"nil",NIL},{"not",NOT},{"set",SET},{"var",VAR},{NULL,0}}, //Reserved words of size 3
+    {{"and",AND},{"div",DIV},{"end",END},{"for",FOR},{"mod",MOD},{"nil",NIL},{"not",NOT},{"set",SET},{"var",VAR},{NULL,0}}, 
+	//Reserved words of size 3
     {{"case",CASE},{"else",ELSE},{"file",FFILE},{"goto",GOTO},{"then",THEN},{"type",TYPE},{"with",WITH},{NULL,0}}, //Reserved words of size 4
     {{"array",ARRAY},{"begin",BEGIN},{"const",CONST},{"label",LABEL},{"until",UNTIL},{"while",WHILE},{NULL,0}},  //Reserved words of size 5
     {{"downto",DOWNTO}, {"packed",PACKED},{"record",RECORD}, {"repeat",REPEAT},{NULL,0}},  // Reserved words of size 6
@@ -102,7 +104,7 @@ Token* get_token()
     
     return ???; //What should be returned here?
 }
-static ??? get_char(???)
+static ??? get_char(???) 
 {
     /*
      If at the end of the current line (how do you check for that?),
@@ -114,12 +116,13 @@ static ??? get_char(???)
      Write some code to set the character ch to the next character in the buffer
      */
 }
-static ??? skip_blanks(???)
+static int skip_blanks(char source_buffer[])
 {
     /*
      Write some code to skip past the blanks in the program and return a pointer
      to the first non blank character
      */
+	
     
 }
 static ??? skip_comment(???)
@@ -154,23 +157,34 @@ static ??? get_string(???)
      Write some code to Extract the string
      */
 }
-static ??? get_special(???)
+static Token get_special(???)
 {
     /*
      Write some code to Extract the special token.  Most are single-character
      some are double-character.  Set the token appropriately.
      */
 }
-static ??? downshift_word(???)
+static char[] downshift_word(char *ptr)
 {
     /*
      Make all of the characters in the incoming word lower case.
      */
+	char inputLine[DECENT_LINE_LENGTH]; //added this constant in common
+	for (int i = 0; i < DECENT_LINE_LENGTH; i++){
+		inputLine[i] = tolower(inputLine[i]); //imported another lib for this
+	}
+	return inputLine;
 }
-static BOOLEAN is_reserved_word(???)
+static BOOLEAN is_reserved_word(char *ptr)
 {
     /*
      Examine the reserved word table and determine if the function input is a reserved word.
      */
+	for (int i=0; i<==9;i++){
+		for(int j=0; j<=10; j++){
+		if (get_string(ptr) = rwTable[i][j])
+			return true;
+		}
+	}
     return FALSE;
 }
