@@ -30,7 +30,8 @@ int main(int argc, const char * argv[])
         add_token_to_list(token_list, token);
         print_token(token);
     }
-    while (token.charValue != '.');//I think this will work, granted there's no '.' within the rest of the document...
+    while (token.tCode != END_OF_FILE);
+    
     quit_scanner(source_file, token_list);
     return 0;
 }

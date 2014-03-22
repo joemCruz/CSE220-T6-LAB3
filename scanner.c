@@ -16,14 +16,14 @@
  return types for functions with ???.
  ******************/
 
-static ??? get_char(???);
-static NULL skip_comment(char, char);
-static NULL skip_blanks(char);
-static ??? get_word(???);
-static ??? get_number(???);
-static ??? get_string(???);
-static ??? get_special(???);
-static ??? downshift_word(*char);
+static char get_char();
+static NULL skip_comment(*char);
+static NULL skip_blanks(*char);
+static Token get_word(*char);
+static Token get_number(*char);
+static Token get_string(???);
+static Token get_special(???);
+static NULL downshift_word(*char);
 static BOOLEAN is_reserved_word(???);
 
 typedef enum
@@ -65,18 +65,30 @@ void init_scanner(FILE *source_file, char source_name[], char date[])
     src_file = source_file;
     strcpy(src_name, source_name);
     strcpy(todays_date, date);
-    
+    static char char_table[];
     /*******************
      initialize character table, this table is useful for identifying what type of character 
      we are looking at by setting our array up to be a copy the ascii table.  Since C thinks of 
      a char as like an int you can use ch in get_token as an index into the table.
      *******************/
+    for (int i = 0; i <= 255; i++)
+        {    
+            if (isalpha((char) i))
+                char_table[i] = LETTER;
+            else if (isnumeric((char) i))
+                char_table[i] = DIGIT;
+            else if (i == 39 || i == 34)
+                char_table[i] = QUOTE;
+            else if (i == 46)
+                char_table[i] = EOF_CODE;
+            else
+                char_table[i] = SPECIAL;
+        }
     
 }
 BOOLEAN get_source_line(char source_buffer[])
 {
     char print_buffer[MAX_SOURCE_LINE_LENGTH + 9];
-//    char source_buffer[MAX_SOURCE_LINE_LENGTH];  //I've moved this to a function parameter.  Why did I do that?
     static int line_number = 0;
     
     if (fgets(source_buffer, MAX_SOURCE_LINE_LENGTH, src_file) != NULL)
@@ -95,51 +107,109 @@ Token* get_token()
 {
     char ch; //This can be the current character you are examining during scanning.
     char token_string[MAX_TOKEN_STRING_LENGTH]; //Store your token here as you build it.
-    char *token_ptr = ???; //write some code to point this to the beginning of token_string
-    ???;  //I am missing the most important variable in the function, what is it?  Hint: what should I return?
+    char *token_ptr = token_string[0]; //write some code to point this to the beginning of token_string
+    Token toRtrn;
+    int char_code;
     
-    //1.  Skip past all of the blanks
-    //2.  figure out which case you are dealing with LETTER, DIGIT, QUOTE, EOF, or special, by examining ch
-    //3.  Call the appropriate function to deal with the cases in 2.
-    
-    return ???; //What should be returned here?
+    skip_blanks(token_ptr);
+        //1.  Skip past all of the blanks
+    ch = get_char(token_ptr);
+    char_code = char_table[(int) ch];
+    if (char_code == QUOTE)
+            toRtrn = get_string(token_ptr); -
+    else if (char_code == LETTER)
+            toRtrn = get_word(token_ptr);
+    else if (char_code == DIGIT)
+            toRtrn = get_number(token_ptr); - 
+    else if (char_code == SPECIAL)
+            toRtrn = get_special(token_ptr); 
+    else if (char_code == EOF_CODE)
+            {
+                toRtrn.tCode = END_OF_FILE;
+            }
+    return toRtrn;
 }
+<<<<<<< HEAD
 static ??? get_char(???) 
+=======
+
+static char get_char(char *ptr)
+>>>>>>> branch-1
 {
     /*
      If at the end of the current line (how do you check for that?),
      we should call get source line.  If at the EOF (end of file) we should
      set the character ch to EOF and leave the function.
      */
-    
-    /*
-     Write some code to set the character ch to the next character in the buffer
-     */
+     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH] = NULL;
+
+     if (ptr == current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer[] == NULL)
+     {
+        if (!get_source_line(current_line_buffer))
+            {
+                ch = (char) 46;
+                return ch;
+            }
+    }
+    ch = current_line_buffer[ptr];
+    return ch;
+
 }
+<<<<<<< HEAD
 static int skip_blanks(char source_buffer[])
+=======
+static NULL skip_blanks(char *ptr)
+>>>>>>> branch-1
 {
     /*
      Write some code to skip past the blanks in the program and return a pointer
      to the first non blank character
      */
+<<<<<<< HEAD
 	
     
+=======
+     while (get_char(ptr) == " ")
+        ptr++;
+    return ptr;
+>>>>>>> branch-1
 }
-static ??? skip_comment(???)
+
+static NULL skip_comment(char *ptr)
 {
     /*
      Write some code to skip past the comments in the program and return a pointer
      to the first non blank character.  Watch out for the EOF character.
      */
+     char *cur_ptr;
+     do
+        {
+            ptr++;
+            cur_ptr = get_char(ptr);
+        } while (cur_ptr != "\}" || cur_ptr != EOF_CODE);
+
+    return ptr;
+
+
 }
-static ??? get_word(???)
+static Token get_word(char *ptr)
 {
-    /*
-     Write some code to Extract the word
-     */
+    char token_string[MAX_TOKEN_STRING_LENGTH];
+    char curChar = get_char(ptr);
+    Token returnWord;
+    while (isalpha(curChar) || isnumeric((curChar)))
+    {
+
+        token_string[i]  = curChar;
+        ptr++;
+        curChar = get_char(ptr);
+
+    }
     
     //Downshift the word, to make it lower case
-    
+     if (isalpha((char) i))
+                char_table[i] = LETTER;
+            else if (isnumeric((char) i))
     /*
      Write some code to Check if the word is a reserved word.
      if it is not a reserved word its an identifier.
