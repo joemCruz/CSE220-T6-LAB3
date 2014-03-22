@@ -215,17 +215,71 @@ static Token get_word(char *ptr)
      if it is not a reserved word its an identifier.
      */
 }
-static ??? get_number(???)
+static Token get_number(char *ptr)
 {
-    /*
-     Write some code to Extract the number and convert it to a literal number.
-     */
+  char tokenString[MAX_TOKEN_STRING_LENGTH];
+  Token numberToken;
+  numberToken -> tCode = NUMBER;
+  //input num holds current char puts in output num, rest is data checking
+  char inputNum = getChar(*ptr);
+  int outputNum = inputNum;
+  float floatNum = (float) outputNum;
+
+  BOOLEAN eStart;
+  BOOLEAN eNeg;
+
+  int i = 0;
+  do{
+    inputNum = get_char(ptr); //start here, input
+    if(inputNum == '-'){
+      tokenString[i] = '-'; //at whatever point put in string
+      eNeg = TRUE;
+    }
+    else if(inputNum == 'e'){
+      tokenString[i] = 'e'; //at whatever point
+      eStart = TRUE;
+    }
+    else if(isnumeric(inputNum)){
+      tokenString[i] = inputNum; //whatever point
+    }
+    else
+      break;
+    char* nextPtr = ptr++;
+  }while(isnumeric(get_char(nextPtr)) || get_char(nextPtr) == 'e' || get_char(nextPtr) == '-');
+
+  if (eStart = True){
+    numberToken.stringValue = tokenString;
+    return numberToken;
+  }
+  else if (eStart = True && eNeg = True){
+    numberToken.stringValue = tokenString;
+    return numberToken;
+  }
+  else{
+    numberToken.intValue = inputNum;
+    numberToken.lType = INTEGER_LIT;
+    return numberToken;
+  }
 }
-static ??? get_string(???)
+static Token get_string(char *ptr)
 {
-    /*
-     Write some code to Extract the string
-     */
+  char newString[DECENT_LINE_LENGTH];
+  Token stringToken;
+  int i = 0;
+  //since first char passed is ' or ''
+  ptr++;
+  //skip to next char
+  nextChar = get_char(ptr);
+  while(nextChar != ' \' ' || nextChar != ' \" '){
+    newString[i] = nextChar;
+    i++;
+  }
+  
+  newString[i+1] = '\0';//creates char*
+  stringToken.stringValue = newString[];
+  stringToken.lType = STRING_LIT;
+  stringToken.tCode = STRING;
+  return stringToken;
 }
 static Token get_special(???)
 {
