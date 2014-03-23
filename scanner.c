@@ -21,10 +21,10 @@ static NULL skip_comment(*char);
 static NULL skip_blanks(*char);
 static Token get_word(*char);
 static Token get_number(*char);
-static Token get_string(???);
-static Token get_special(???);
+static Token get_string();
+static Token get_special();
 static NULL downshift_word(*char);
-static BOOLEAN is_reserved_word(???);
+static BOOLEAN is_reserved_word();
 
 typedef enum
 {
@@ -129,12 +129,8 @@ Token* get_token()
             }
     return toRtrn;
 }
-<<<<<<< HEAD
-static ??? get_char(???) 
-=======
 
 static char get_char(char *ptr)
->>>>>>> branch-1
 {
     /*
      If at the end of the current line (how do you check for that?),
@@ -155,24 +151,15 @@ static char get_char(char *ptr)
     return ch;
 
 }
-<<<<<<< HEAD
-static int skip_blanks(char source_buffer[])
-=======
 static NULL skip_blanks(char *ptr)
->>>>>>> branch-1
 {
     /*
      Write some code to skip past the blanks in the program and return a pointer
      to the first non blank character
      */
-<<<<<<< HEAD
-	
-    
-=======
      while (get_char(ptr) == " ")
         ptr++;
     return ptr;
->>>>>>> branch-1
 }
 
 static NULL skip_comment(char *ptr)
@@ -270,7 +257,7 @@ static Token get_string(char *ptr)
   ptr++;
   //skip to next char
   nextChar = get_char(ptr);
-  while(nextChar != ' \' ' || nextChar != ' \" '){
+  while(nextChar != '\'' || nextChar != '\"'){
     newString[i] = nextChar;
     i++;
   }
@@ -281,12 +268,82 @@ static Token get_string(char *ptr)
   stringToken.tCode = STRING;
   return stringToken;
 }
-static Token get_special(???)
+static Token get_special(char *ptr)
 {
-    /*
-     Write some code to Extract the special token.  Most are single-character
-     some are double-character.  Set the token appropriately.
-     */
+    char ch = get_char(ptr);
+    Token tokie;
+    next_ch = get_char(ptr+1);
+    switch(ch){
+	case '^':
+	    tokie.tCode = UPARROW;
+	    break;
+	case '*':
+	    tokie.tCode = STAR;
+	    break;
+	case '(':
+	    tokie.tCode = LPAREN;
+	    break;
+	case ')':
+	    tokie.tCode = RPAREN;
+	    break;
+	case '-':
+	    tokie.tCode = MINUS;
+	    break;
+	case '+':
+	    tokie.tCode = PLUS;
+	    break;
+	case '=':
+	    tokie.tCode = EQUAL;
+	    break;
+	case '[':
+	    tokie.tCode = LBRACKET;
+	    break;
+	case ']':
+	    tokie.tCode = RBRACKET;
+	    break;
+	case ':':
+	    if(get_char(ptr++) == '='){
+		tokie.tCode = COLONEQUAL;}
+	    else{
+		tokie.tCode = COLON;
+		ptr--;}
+	    break;
+	case ';':
+	    tokie.tCode = SEMICOLON;
+	    break;
+	case '<':
+	    ch = get_char(ptr++);
+	    if(ch  == '>'){
+		tokie.tCode = NE;}
+	    else if(ch == '='){
+		tokie.tCode = LE;}
+	    else{
+		tokie.tCode = LT;
+		ptr--;}
+	    break;
+	case '>':
+	    if(get_char(ptr++) == '='){
+		tokie.tCode = GE;}
+	    else{
+		tokie.tCode = GT;
+		ptr--;}		
+	    break;
+	case ',':
+	    tokie.tCode = COMMA;
+	    break;
+	case '.':
+	    if(get_char(ptr++) == '.'){
+		tokie.tCode = DOTDOT;}
+	    else{
+		tokie.tCode = PERIOD;
+		ptr--;}
+	    break;
+	case '/':
+	    tokie.tCode = SLASH;
+	    break;
+	}
+	tokie.stringValue = SYMBOL_STRINGS[tokie.tCode];
+	return tokie;
 }
 static char[] downshift_word(char *ptr)
 {

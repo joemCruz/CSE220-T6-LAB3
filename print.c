@@ -58,5 +58,18 @@ static void print_page_header(char source_name[], char date[])
 }
 void print_token(Token *token)
 {
-    //Missing code goes here
+    if(token.tCode == NO_TOKEN || token.tCode == IDENTIFIER || token.tCode == NUMBER || token.tCode == STRING){
+	switch(token.lType){
+		case INT_LIT:
+			printf("\t%s\t%d\n", SYMBOL_STRINGS[token.tCode], token.intValue);
+			break;
+		case REAL_LIT:
+			printf("\t%s\t%f\n", SYMBOL_STRINGS[token.tCode], token.realValue);
+    			break;
+		case STRING_LIT:
+			if(token.tCode = STRING)
+				printf("\t%s\t%s\n", SYMBOL_STRINGS[token.tCode], token.stringValue);
+			else
+                                printf("\t%s\t%s\n", SYMBOL_STRINGS[token.tCode], token.tCode);
+
 }
