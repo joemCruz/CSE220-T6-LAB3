@@ -64,7 +64,7 @@ void print_token(Token *token)
     {
 	   switch((* token).lType)
        {
-            case INT_LIT:
+            case INTEGER_LIT:
                 printf("\t%s\t%d\n", SYMBOL_STRINGS[(* token).tCode], (* token).intValue);
                 break;
             case REAL_LIT:
@@ -75,4 +75,6 @@ void print_token(Token *token)
 				    printf("\t%s\t%s\n", SYMBOL_STRINGS[(* token).tCode], (* token).stringValue);
                 else
                     printf("\t%s\t%s\n", SYMBOL_STRINGS[(* token).tCode], (* token).tCode);
+        }
+    }
 }
