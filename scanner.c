@@ -127,7 +127,7 @@ Token* get_token()
             toRtrn = get_special(token_ptr); 
     else if (char_code == EOF_CODE)
             {
-                (* toRtrn).tCode = END_OF_FILE;
+                toRtrn.tCode = END_OF_FILE;
             }
     tkn_PTR = &toRtrn;
     return tkn_PTR;
@@ -199,7 +199,7 @@ static Token get_word(char *ptr)
 
     downshift_word(token_string, length);
     
-    if (!is_reserved_word(token_string, length, tCode))
+    if (!is_reserved_word(token_string, length, *tCode))
       returnWord.tCode = IDENTIFIER;
     else
       returnWord.tCode = tCode;
@@ -357,7 +357,7 @@ static void downshift_word(char word[], int length)
 {
    
 	for (int i = 0; i < length; i++)
-		inputLine[i] = tolower(inputLine[i]); //imported another lib for this
+		word[i] = tolower(word[i]);
 }
 
 static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode)
@@ -366,17 +366,17 @@ static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode)
   BOOLEAN disc;
   for (int i = 0; rw_table[length-2][i].token_code != 0; i++)
   {
-    curRW = &rw_table[length-2][i].string;
-    disc = false;
+    curRW = *rw_table[length-2][i].string;
+    disc = FALSE;
     for (int j = 0; j < length; j++)
       if ((* (curRW + j)) != word[j])
-          disc = true;
+          disc = TRUE;
     if (!disc)
     {
       *resCode = rw_table[length-2][i].token_code;
-      return true;
+      return TRUE;
     }
   }
-  return false;
+  return FALSE;
     
 }
