@@ -40,6 +40,7 @@ static FILE *src_file;
 static char src_name[MAX_FILE_NAME_LENGTH];
 static char todays_date[DATE_STRING_LENGTH];
 static CharCode char_table[256];  // The character table
+static const int SPACE = 32;
 
 typedef struct
 {
@@ -159,7 +160,7 @@ static void skip_blanks(char *ptr)
      Write some code to skip past the blanks in the program and return a pointer
      to the first non blank character
      */
-     while (get_char(ptr) == (int) " ")
+     while (get_char(ptr) == SPACE)
         ptr++;
 }
 
