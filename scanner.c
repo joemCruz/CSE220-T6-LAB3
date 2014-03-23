@@ -108,7 +108,7 @@ Token* get_token()
     char ch; //This can be the current character you are examining during scanning.
     char token_string[MAX_TOKEN_STRING_LENGTH]; //Store your token here as you build it.
     char *token_ptr = &token_string[0]; //write some code to point this to the beginning of token_string
-    Token toRtrn;
+    Token *toRtrn;
     int char_code;
     
     skip_blanks(token_ptr);
@@ -125,7 +125,7 @@ Token* get_token()
             toRtrn = get_special(token_ptr); 
     else if (char_code == EOF_CODE)
             {
-                toRtrn.tCode = END_OF_FILE;
+                (* toRtrn).tCode = END_OF_FILE;
             }
     return toRtrn;
 }
@@ -137,9 +137,10 @@ static char get_char(char *ptr)
      we should call get source line.  If at the EOF (end of file) we should
      set the character ch to EOF and leave the function.
      */
-     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH] = {NULL};
+     char ch;
+     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH];
 
-     if (ptr == current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer[0] == NULL)
+     if (ptr == current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer == NULL)
      {
         if (!get_source_line(current_line_buffer))
             {
