@@ -16,13 +16,13 @@
  return types for functions with ???.
  ******************/
 
-static char get_char();
+static char get_char(*char);
 static NULL skip_comment(*char);
 static NULL skip_blanks(*char);
 static Token get_word(*char);
 static Token get_number(*char);
-static Token get_string();
-static Token get_special();
+static Token get_string(*char);
+static Token get_special(*char);
 static NULL downshift_word(*char);
 static BOOLEAN is_reserved_word();
 
