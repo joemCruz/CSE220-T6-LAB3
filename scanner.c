@@ -21,8 +21,8 @@ static NULL skip_comment(*char);
 static NULL skip_blanks(*char);
 static Token get_word(*char);
 static Token get_number(*char);
-static Token get_string(???);
-static Token get_special(???);
+static Token get_string(*char);
+static Token get_special(*char);
 static NULL downshift_word(*char);
 static BOOLEAN is_reserved_word(???);
 
@@ -129,12 +129,9 @@ Token* get_token()
             }
     return toRtrn;
 }
-<<<<<<< HEAD
-static ??? get_char(???) 
-=======
+
 
 static char get_char(char *ptr)
->>>>>>> branch-1
 {
     /*
      If at the end of the current line (how do you check for that?),
@@ -155,24 +152,17 @@ static char get_char(char *ptr)
     return ch;
 
 }
-<<<<<<< HEAD
-static int skip_blanks(char source_buffer[])
-=======
+
 static NULL skip_blanks(char *ptr)
->>>>>>> branch-1
 {
     /*
      Write some code to skip past the blanks in the program and return a pointer
      to the first non blank character
      */
-<<<<<<< HEAD
-	
-    
-=======
+
      while (get_char(ptr) == " ")
         ptr++;
     return ptr;
->>>>>>> branch-1
 }
 
 static NULL skip_comment(char *ptr)
@@ -261,6 +251,8 @@ static Token get_number(char *ptr)
     return numberToken;
   }
 }
+
+
 static Token get_string(char *ptr)
 {
   char newString[DECENT_LINE_LENGTH];
@@ -281,13 +273,19 @@ static Token get_string(char *ptr)
   stringToken.tCode = STRING;
   return stringToken;
 }
-static Token get_special(???)
+
+
+static Token get_special(char *ptr)
 {
     /*
      Write some code to Extract the special token.  Most are single-character
      some are double-character.  Set the token appropriately.
      */
+     Token newToken;
+     return newToken; // Placeholder for testing
 }
+
+
 static char[] downshift_word(char *ptr)
 {
     /*
@@ -299,6 +297,7 @@ static char[] downshift_word(char *ptr)
 	}
 	return inputLine;
 }
+
 static BOOLEAN is_reserved_word(char *ptr)
 {
     /*
