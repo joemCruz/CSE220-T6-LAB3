@@ -199,7 +199,7 @@ static Token get_word(char *ptr)
 
     downshift_word(token_string, length);
     
-    if (!is_reserved_word(token_string, length, *tCode))
+    if (!is_reserved_word(token_string, length, &tCode))
       returnWord.tCode = IDENTIFIER;
     else
       returnWord.tCode = tCode;
@@ -366,7 +366,7 @@ static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode)
   BOOLEAN disc;
   for (int i = 0; rw_table[length-2][i].token_code != 0; i++)
   {
-    curRW = &( (char*) rw_table[length-2][i].string);
+    curRW = ( (char*) rw_table[length-2][i].string);
     disc = FALSE;
     for (int j = 0; j < length; j++)
       if ((* (curRW + j)) != word[j])
