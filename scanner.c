@@ -103,7 +103,8 @@ BOOLEAN get_source_line(char source_buffer[])
         return (FALSE);
     }
 }
-Token* get_token()
+
+Token get_token()
 {
     char ch; //This can be the current character you are examining during scanning.
     char token_string[MAX_TOKEN_STRING_LENGTH]; //Store your token here as you build it.

@@ -13,6 +13,6 @@
 #include "print.h"
 
 void init_scanner();
-Token* get_token();
+Token get_token();
 
 #endif
