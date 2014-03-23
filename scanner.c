@@ -16,14 +16,14 @@
  return types for functions with ???.
  ******************/
 
-static char get_char(*char);
-static NULL skip_comment(*char);
-static NULL skip_blanks(*char);
-static Token get_word(*char);
-static Token get_number(*char);
-static Token get_string(*char);
-static Token get_special(*char);
-static NULL downshift_word(*char);
+static char get_char(char *ptr);
+static void skip_comment(char *ptr);
+static void skip_blanks(char *ptr);
+static Token get_word(char *ptr);
+static Token get_number(char *ptr);
+static Token get_string(char *ptr);
+static Token get_special(char *ptr);
+static void downshift_word(char *ptr);
 static BOOLEAN is_reserved_word();
 
 typedef enum
