@@ -77,7 +77,7 @@ typedef struct
 	LiteralType lType;
 	TokenCode tCode;
 	/*for the linked list, holds the node pointer to next, if next 		node is empty, points to null*/
-	struct Token *next;
+	struct Token next*;
 }
 Token; 
 
