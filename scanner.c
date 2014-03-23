@@ -65,7 +65,7 @@ void init_scanner(FILE *source_file, char source_name[], char date[])
     src_file = source_file;
     strcpy(src_name, source_name);
     strcpy(todays_date, date);
-    static char char_table[];
+    static char char_table[256];
     /*******************
      initialize character table, this table is useful for identifying what type of character 
      we are looking at by setting our array up to be a copy the ascii table.  Since C thinks of 
@@ -116,11 +116,11 @@ Token* get_token()
     ch = get_char(token_ptr);
     char_code = char_table[(int) ch];
     if (char_code == QUOTE)
-            toRtrn = get_string(token_ptr); -
+            toRtrn = get_string(token_ptr);
     else if (char_code == LETTER)
             toRtrn = get_word(token_ptr);
     else if (char_code == DIGIT)
-            toRtrn = get_number(token_ptr); - 
+            toRtrn = get_number(token_ptr); 
     else if (char_code == SPECIAL)
             toRtrn = get_special(token_ptr); 
     else if (char_code == EOF_CODE)
@@ -137,9 +137,9 @@ static char get_char(char *ptr)
      we should call get source line.  If at the EOF (end of file) we should
      set the character ch to EOF and leave the function.
      */
-     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH] = NULL;
+     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH] = {NULL};
 
-     if (ptr == current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer[] == NULL)
+     if (ptr == current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer[0] == NULL)
      {
         if (!get_source_line(current_line_buffer))
             {
