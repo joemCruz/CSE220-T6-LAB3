@@ -24,7 +24,7 @@ static Token get_number(char *ptr);
 static Token get_string(char *ptr);
 static Token get_special(char *ptr);
 static void downshift_word(char word[], int length);
-static BOOLEAN is_reserved_word(char word[], int length, token_code *resCode);
+static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode);
 
 typedef enum
 {
@@ -110,7 +110,7 @@ Token* get_token()
     Token toRtrn;
     int char_code;
     Token *tkn_PTR;
-    tkn_PTR = (Token *)malloc(sizeof(tkn_PTR)); // dynamically allocate memory for a new token
+    tkn_PTR = (Token *)malloc(sizeof(*tkn_PTR)); // dynamically allocate memory for a new token
     
     skip_blanks(token_ptr);
         //1.  Skip past all of the blanks
@@ -359,7 +359,7 @@ static void downshift_word(char word[], int length)
 		inputLine[i] = tolower(inputLine[i]); //imported another lib for this
 }
 
-static BOOLEAN is_reserved_word(char word[], int length, token_code *resCode)
+static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode)
 {
   char *curRW;
   BOOLEAN disc;
