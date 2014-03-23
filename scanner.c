@@ -186,7 +186,7 @@ static Token get_word(char *ptr)
     char token_string[MAX_TOKEN_STRING_LENGTH];
     char curChar = get_char(ptr);
     Token returnWord;
-    TokenCode tCode;
+    TokenCode tCode = NO_TOKEN;
     int length;
     
     for (int i = 0; isalpha(curChar) || isnumeric((curChar)); i++) // Continue until a nonalphanumeric character is found
@@ -366,7 +366,7 @@ static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode)
   BOOLEAN disc;
   for (int i = 0; rw_table[length-2][i].token_code != 0; i++)
   {
-    curRW = *rw_table[length-2][i].string;
+    curRW = &( (char*) rw_table[length-2][i].string);
     disc = FALSE;
     for (int j = 0; j < length; j++)
       if ((* (curRW + j)) != word[j])
