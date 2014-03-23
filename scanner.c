@@ -19,10 +19,10 @@
 static char get_char(char *ptr);
 static void skip_comment(char *ptr);
 static void skip_blanks(char *ptr);
-static Token get_word(char *ptr);
-static Token get_number(char *ptr);
-static Token get_string(char *ptr);
-static Token get_special(char *ptr);
+static Token* get_word(char *ptr);
+static Token* get_number(char *ptr);
+static Token* get_string(char *ptr);
+static Token* get_special(char *ptr);
 static void downshift_word(char *ptr);
 static BOOLEAN is_reserved_word();
 
@@ -152,7 +152,7 @@ static char get_char(char *ptr)
     return ch;
 
 }
-static NULL skip_blanks(char *ptr)
+static void skip_blanks(char *ptr)
 {
     /*
      Write some code to skip past the blanks in the program and return a pointer
@@ -163,7 +163,7 @@ static NULL skip_blanks(char *ptr)
     return ptr;
 }
 
-static NULL skip_comment(char *ptr)
+static void skip_comment(char *ptr)
 {
     /*
      Write some code to skip past the comments in the program and return a pointer
@@ -179,7 +179,7 @@ static NULL skip_comment(char *ptr)
 }
 
 
-static Token get_word(char *ptr)
+static Token* get_word(char *ptr)
 {
     char token_string[MAX_TOKEN_STRING_LENGTH];
     char curChar = get_char(ptr);
@@ -202,7 +202,7 @@ static Token get_word(char *ptr)
      if it is not a reserved word its an identifier.
      */
 }
-static Token get_number(char *ptr)
+static Token* get_number(char *ptr)
 {
   char tokenString[MAX_TOKEN_STRING_LENGTH];
   Token numberToken;
@@ -248,7 +248,7 @@ static Token get_number(char *ptr)
     return numberToken;
   }
 }
-static Token get_string(char *ptr)
+static Token* get_string(char *ptr)
 {
   char newString[DECENT_LINE_LENGTH];
   Token stringToken;
@@ -268,7 +268,7 @@ static Token get_string(char *ptr)
   stringToken.tCode = STRING;
   return stringToken;
 }
-static Token get_special(char *ptr)
+static Token* get_special(char *ptr)
 {
     char ch = get_char(ptr);
     Token tokie;
@@ -343,7 +343,7 @@ static Token get_special(char *ptr)
 	    break;
 	}
 	tokie.stringValue = SYMBOL_STRINGS[tokie.tCode];
-	return tokie;
+	return &tokie;
 }
 static char[] downshift_word(char *ptr)
 {
