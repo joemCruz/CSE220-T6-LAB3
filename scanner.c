@@ -159,9 +159,8 @@ static void skip_blanks(char *ptr)
      Write some code to skip past the blanks in the program and return a pointer
      to the first non blank character
      */
-     while (get_char(ptr) == " ")
+     while (get_char(ptr) == (int) " ")
         ptr++;
-    return ptr;
 }
 
 static void skip_comment(char *ptr)
