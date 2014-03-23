@@ -213,7 +213,7 @@ static Token get_number(char *ptr)
 {
   char tokenString[MAX_TOKEN_STRING_LENGTH];
   Token numberToken;
-  numberToken -> tCode = NUMBER;
+  numberToken.tCode = NUMBER;
   //input num holds current char puts in output num, rest is data checking
   char inputNum = getChar(*ptr);
   int outputNum = inputNum;
@@ -221,6 +221,8 @@ static Token get_number(char *ptr)
 
   BOOLEAN eStart;
   BOOLEAN eNeg;
+  
+  char* nextPtr = ptr;
 
   int i = 0;
   do{
@@ -238,14 +240,14 @@ static Token get_number(char *ptr)
     }
     else
       break;
-    char* nextPtr = ptr++;
+    nextPtr++;
   }while(isnumeric(get_char(nextPtr)) || get_char(nextPtr) == 'e' || get_char(nextPtr) == '-');
 
-  if (eStart = True){
+  if (eStart == TRUE){
     numberToken.stringValue = tokenString;
     return numberToken;
   }
-  else if (eStart = True && eNeg = True){
+  else if (eStart == TRUE && eNeg == TRUE){
     numberToken.stringValue = tokenString;
     return numberToken;
   }
@@ -263,14 +265,17 @@ static Token get_string(char *ptr)
   //since first char passed is ' or ''
   ptr++;
   //skip to next char
+  char nextChar;
+  char* outputString;
   nextChar = get_char(ptr);
   while(nextChar != '\'' || nextChar != '\"'){
     newString[i] = nextChar;
     i++;
   }
   
-  newString[i+1] = '\0';//creates char*
-  stringToken.stringValue = newString[];
+  newString[i+1] = '\0';//creates/converts char*
+  outputString = newString;
+  stringToken.stringValue = outputString;
   stringToken.lType = STRING_LIT;
   stringToken.tCode = STRING;
   return stringToken;
