@@ -23,8 +23,8 @@ static Token* get_word(char *ptr);
 static Token* get_number(char *ptr);
 static Token* get_string(char *ptr);
 static Token* get_special(char *ptr);
-static void downshift_word(char *ptr);
-static BOOLEAN is_reserved_word();
+static void downshift_word(char word[], int length);
+static BOOLEAN is_reserved_word(char word[], int length, token_code *resCode);
 
 typedef enum
 {
@@ -65,7 +65,6 @@ void init_scanner(FILE *source_file, char source_name[], char date[])
     src_file = source_file;
     strcpy(src_name, source_name);
     strcpy(todays_date, date);
-    static char char_table[256];
     /*******************
      initialize character table, this table is useful for identifying what type of character 
      we are looking at by setting our array up to be a copy the ascii table.  Since C thinks of 
@@ -183,24 +182,27 @@ static Token* get_word(char *ptr)
     char token_string[MAX_TOKEN_STRING_LENGTH];
     char curChar = get_char(ptr);
     Token returnWord;
-    while (isalpha(curChar) || isnumeric((curChar)))
+    TokenCode tCode;
+    
+    for (int i = 0; isalpha(curChar) || isnumeric((curChar)); i++) // Continue until a nonalphanumeric character is found
     {
-
         token_string[i]  = curChar;
         ptr++;
         curChar = get_char(ptr);
-
     }
+
+    downshift_word(token_string, i);
     
-    //Downshift the word, to make it lower case
-     if (isalpha((char) i))
-                char_table[i] = LETTER;
-            else if (isnumeric((char) i))
-    /*
-     Write some code to Check if the word is a reserved word.
-     if it is not a reserved word its an identifier.
-     */
+    if (!is_reserved_word(token_string, i, tCode))
+      returnWord.tCode = IDENTIFIER;
+    else
+      returnWord.tCode = tCode;
+    returnWord.stringValue = &token_string[0];
+    return &returnWord;
 }
+
+
+
 static Token* get_number(char *ptr)
 {
   char tokenString[MAX_TOKEN_STRING_LENGTH];
@@ -235,16 +237,16 @@ static Token* get_number(char *ptr)
 
   if (eStart = True){
     numberToken.stringValue = tokenString;
-    return numberToken;
+    return &numberToken;
   }
   else if (eStart = True && eNeg = True){
     numberToken.stringValue = tokenString;
-    return numberToken;
+    return &numberToken;
   }
   else{
     numberToken.intValue = inputNum;
     numberToken.lType = INTEGER_LIT;
-    return numberToken;
+    return &numberToken;
   }
 }
 static Token* get_string(char *ptr)
@@ -265,7 +267,7 @@ static Token* get_string(char *ptr)
   stringToken.stringValue = newString[];
   stringToken.lType = STRING_LIT;
   stringToken.tCode = STRING;
-  return stringToken;
+  return &stringToken;
 }
 static Token* get_special(char *ptr)
 {
@@ -344,27 +346,31 @@ static Token* get_special(char *ptr)
 	tokie.stringValue = SYMBOL_STRINGS[tokie.tCode];
 	return &tokie;
 }
-static char[] downshift_word(char *ptr)
+
+static void downshift_word(char word[], int length)
 {
-    /*
-     Make all of the characters in the incoming word lower case.
-     */
-	char inputLine[DECENT_LINE_LENGTH]; //added this constant in common
-	for (int i = 0; i < DECENT_LINE_LENGTH; i++){
+   
+	for (int i = 0; i < length; i++)
 		inputLine[i] = tolower(inputLine[i]); //imported another lib for this
-	}
-	return inputLine;
 }
-static BOOLEAN is_reserved_word(char *ptr)
+
+static BOOLEAN is_reserved_word(char word[], int length, token_code *resCode)
 {
-    /*
-     Examine the reserved word table and determine if the function input is a reserved word.
-     */
-	for (int i=0; i<==9;i++){
-		for(int j=0; j<=10; j++){
-		if (get_string(ptr) = rwTable[i][j])
-			return true;
-		}
-	}
-    return FALSE;
+  char *curRW;
+  BOOLEAN disc;
+  for (int i = 0; rw_table[length-2][i].token_code != 0; i++)
+  {
+    curRW = &rw_table[length-2][i].string;
+    disc = false;
+    for (int j = 0; j < length; j++)
+      if ((* (curRW + j)) != word[j])
+          disc = true;
+    if (!disc)
+    {
+      *resCode = rw_table[length-2][i].token_code;
+      return true;
+    }
+  }
+  return false;
+    
 }
