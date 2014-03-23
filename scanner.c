@@ -19,10 +19,10 @@
 static char get_char(char *ptr);
 static void skip_comment(char *ptr);
 static void skip_blanks(char *ptr);
-static Token* get_word(char *ptr);
-static Token* get_number(char *ptr);
-static Token* get_string(char *ptr);
-static Token* get_special(char *ptr);
+static Token get_word(char *ptr);
+static Token get_number(char *ptr);
+static Token get_string(char *ptr);
+static Token get_special(char *ptr);
 static void downshift_word(char word[], int length);
 static BOOLEAN is_reserved_word(char word[], int length, token_code *resCode);
 
@@ -107,8 +107,10 @@ Token* get_token()
     char ch; //This can be the current character you are examining during scanning.
     char token_string[MAX_TOKEN_STRING_LENGTH]; //Store your token here as you build it.
     char *token_ptr = &token_string[0]; //write some code to point this to the beginning of token_string
-    Token *toRtrn;
+    Token toRtrn;
     int char_code;
+    Token *tkn_PTR;
+    tkn_PTR = (Token *)malloc(sizeof(tkn_PTR)); // dynamically allocate memory for a new token
     
     skip_blanks(token_ptr);
         //1.  Skip past all of the blanks
@@ -126,7 +128,8 @@ Token* get_token()
             {
                 (* toRtrn).tCode = END_OF_FILE;
             }
-    return toRtrn;
+    tkn_PTR = &toRtrn;
+    return tkn_PTR;
 }
 
 static char get_char(char *ptr)
@@ -177,33 +180,35 @@ static void skip_comment(char *ptr)
 }
 
 
-static Token* get_word(char *ptr)
+static Token get_word(char *ptr)
 {
     char token_string[MAX_TOKEN_STRING_LENGTH];
     char curChar = get_char(ptr);
     Token returnWord;
     TokenCode tCode;
+    int length;
     
     for (int i = 0; isalpha(curChar) || isnumeric((curChar)); i++) // Continue until a nonalphanumeric character is found
     {
         token_string[i]  = curChar;
         ptr++;
         curChar = get_char(ptr);
+        length = i;
     }
 
-    downshift_word(token_string, i);
+    downshift_word(token_string, length);
     
-    if (!is_reserved_word(token_string, i, tCode))
+    if (!is_reserved_word(token_string, length, tCode))
       returnWord.tCode = IDENTIFIER;
     else
       returnWord.tCode = tCode;
     returnWord.stringValue = &token_string[0];
-    return &returnWord;
+    return returnWord;
 }
 
 
 
-static Token* get_number(char *ptr)
+static Token get_number(char *ptr)
 {
   char tokenString[MAX_TOKEN_STRING_LENGTH];
   Token numberToken;
@@ -237,19 +242,19 @@ static Token* get_number(char *ptr)
 
   if (eStart = True){
     numberToken.stringValue = tokenString;
-    return &numberToken;
+    return numberToken;
   }
   else if (eStart = True && eNeg = True){
     numberToken.stringValue = tokenString;
-    return &numberToken;
+    return numberToken;
   }
   else{
     numberToken.intValue = inputNum;
     numberToken.lType = INTEGER_LIT;
-    return &numberToken;
+    return numberToken;
   }
 }
-static Token* get_string(char *ptr)
+static Token get_string(char *ptr)
 {
   char newString[DECENT_LINE_LENGTH];
   Token stringToken;
@@ -267,9 +272,9 @@ static Token* get_string(char *ptr)
   stringToken.stringValue = newString[];
   stringToken.lType = STRING_LIT;
   stringToken.tCode = STRING;
-  return &stringToken;
+  return stringToken;
 }
-static Token* get_special(char *ptr)
+static Token get_special(char *ptr)
 {
     char ch = get_char(ptr);
     Token tokie;
@@ -344,7 +349,7 @@ static Token* get_special(char *ptr)
 	    break;
 	}
 	tokie.stringValue = SYMBOL_STRINGS[tokie.tCode];
-	return &tokie;
+	return tokie;
 }
 
 static void downshift_word(char word[], int length)
