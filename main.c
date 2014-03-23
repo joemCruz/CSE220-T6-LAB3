@@ -15,7 +15,7 @@ FILE *init_lister(const char *name, char source_file_name[], char dte[]);
 void quit_scanner(FILE *src_file, Token *list);
 void add_token_to_list(Token *list, Token *new_token);
 
-int main(int argc, const char * argv[])
+int main(int argc, const char *argv[])
 {
     Token *token;
     Token *token_list; //This needs to be implemented as a linked list in scanner.h.
@@ -30,7 +30,7 @@ int main(int argc, const char * argv[])
         add_token_to_list(token_list, token);
         print_token(token);
     }
-    while (token.tCode != END_OF_FILE);
+    while ((* token).tCode != END_OF_FILE);
     
     quit_scanner(source_file, token_list);
     return 0;

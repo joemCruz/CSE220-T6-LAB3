@@ -107,7 +107,7 @@ Token* get_token()
 {
     char ch; //This can be the current character you are examining during scanning.
     char token_string[MAX_TOKEN_STRING_LENGTH]; //Store your token here as you build it.
-    char *token_ptr = token_string[0]; //write some code to point this to the beginning of token_string
+    char *token_ptr = &token_string[0]; //write some code to point this to the beginning of token_string
     Token toRtrn;
     int char_code;
     
@@ -168,17 +168,16 @@ static NULL skip_comment(char *ptr)
      Write some code to skip past the comments in the program and return a pointer
      to the first non blank character.  Watch out for the EOF character.
      */
-     char *cur_ptr;
      do
         {
             ptr++;
-            cur_ptr = get_char(ptr);
-        } while (cur_ptr != "\}" || cur_ptr != EOF_CODE);
+        } while (*ptr != "\}" || *ptr != EOF_CODE);
 
     return ptr;
 
-
 }
+
+
 static Token get_word(char *ptr)
 {
     char token_string[MAX_TOKEN_STRING_LENGTH];
