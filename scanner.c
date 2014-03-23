@@ -140,15 +140,16 @@ static char get_char(char *ptr)
      char ch;
      static char current_line_buffer[MAX_SOURCE_LINE_LENGTH];
 
-     if (ptr == current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer == NULL)
+     if (ptr == &current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer == NULL)
      {
         if (!get_source_line(current_line_buffer))
             {
-                ch = (char) 46;
-                return ch;
+                ch = (char) 46; // Assume failure to get next line means there isn't one
+                return ch; 
             }
+        ptr = &current_line_buffer[0]; // Set pointer to beginning of new line buffer
     }
-    ch = current_line_buffer[ptr];
+    ch = *ptr;
     return ch;
 
 }
