@@ -75,7 +75,7 @@ void init_scanner(FILE *source_file, char source_name[], char date[])
         {    
             if (isalpha((char) i))
                 char_table[i] = LETTER;
-            else if (isnumeric((char) i))
+            else if (isdigit((char) i))
                 char_table[i] = DIGIT;
             else if (i == 39 || i == 34)
                 char_table[i] = QUOTE;
@@ -189,7 +189,7 @@ static Token get_word(char *ptr)
     TokenCode tCode = NO_TOKEN;
     int length;
     
-    for (int i = 0; isalpha(curChar) || isnumeric((curChar)); i++) // Continue until a nonalphanumeric character is found
+    for (int i = 0; isalpha(curChar) || isdigit((curChar)); i++) // Continue until a nonalphanumeric character is found
     {
         token_string[i]  = curChar;
         ptr++;
@@ -215,7 +215,7 @@ static Token get_number(char *ptr)
   Token numberToken;
   numberToken.tCode = NUMBER;
   //input num holds current char puts in output num, rest is data checking
-  char inputNum = getChar(*ptr);
+  char inputNum = get_char(*ptr);
   int outputNum = inputNum;
   float floatNum = (float) outputNum;
 
@@ -235,13 +235,13 @@ static Token get_number(char *ptr)
       tokenString[i] = 'e'; //at whatever point
       eStart = TRUE;
     }
-    else if(isnumeric(inputNum)){
+    else if(isdigit(inputNum)){
       tokenString[i] = inputNum; //whatever point
     }
     else
       break;
     nextPtr++;
-  }while(isnumeric(get_char(nextPtr)) || get_char(nextPtr) == 'e' || get_char(nextPtr) == '-');
+  }while(isdigit(get_char(nextPtr)) || get_char(nextPtr) == 'e' || get_char(nextPtr) == '-');
 
   if (eStart == TRUE){
     numberToken.stringValue = tokenString;
