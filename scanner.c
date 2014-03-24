@@ -149,10 +149,9 @@ static char get_char(char *ptr)
                 ch = (char) 46; // Assume failure to get next line means there isn't one
                 return ch; 
             }
-        ptr = &current_line_buffer[0]; // Set pointer to beginning of new line buffer
+        ptr = current_line_buffer; // Set pointer to beginning of new line buffer
     }
     ch = *ptr;
-    printf("First char is: %c", ch);
     return ch;
 
 }
@@ -195,7 +194,7 @@ static Token get_word(char *ptr)
         ptr++;
         curChar = get_char(ptr);
         length = i;
-        printf("Length is: %i",i)
+        printf("Length is: %i",i);
     }
 
     downshift_word(token_string, length);
