@@ -22,10 +22,8 @@ int main(int argc, const char *argv[])
     char source_name[MAX_FILE_NAME_LENGTH];
     char date[DATE_STRING_LENGTH];
     FILE *source_file;
-source_file = init_lister(argv[1], source_name, date);
-	printf("%s",argv[1]);
+    source_file = init_lister(argv[1], source_name, date);
     init_scanner(source_file, source_name, date);
-    printf("%s",argv[1]);
     do
     {
         token = get_token();
