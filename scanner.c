@@ -284,7 +284,7 @@ static Token get_special(char *ptr)
 {
     char ch = get_char(ptr);
     Token tokie;
-    tokie.(*stringValue) = ch;
+    *(tokie.stringValue) = ch;
     switch(ch){
 	case '^':
 	    tokie.tCode = UPARROW;
@@ -317,7 +317,7 @@ static Token get_special(char *ptr)
 	    if(get_char(ptr++) == '=')
         {
           tokie.tCode = COLONEQUAL;
-          tokie.(*stringValue)++ = '=';
+          *(tokie.stringValue)++ = '=';
         }
 	    else{
 		tokie.tCode = COLON;
@@ -331,12 +331,12 @@ static Token get_special(char *ptr)
 	    if(ch  == '>')
       {
         tokie.tCode = NE;
-        tokie.(*stringValue)++ = ch;
+        *(tokie.stringValue)++ = ch;
       }
 	    else if(ch == '=')
         {
           tokie.tCode = LE;
-          tokie.(*stringValue)++ = ch;
+          *(tokie.stringValue)++ = ch;
         }
 	    else{
 		tokie.tCode = LT;
@@ -346,7 +346,7 @@ static Token get_special(char *ptr)
 	    if(get_char(ptr++) == '=')
         {
           tokie.tCode = GE;
-          tokie.(*stringValue)++ = ch;
+          *(tokie.stringValue)++ = ch;
         }
 	    else{
 		tokie.tCode = GT;
@@ -359,7 +359,7 @@ static Token get_special(char *ptr)
 	    if(get_char(ptr++) == '.')
         {
           tokie.tCode = DOTDOT;
-          tokie.(*stringValue)++ = ch;
+          *(tokie.stringValue)++ = ch;
         }
 	    else{
 		tokie.tCode = PERIOD;
