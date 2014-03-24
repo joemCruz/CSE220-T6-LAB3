@@ -215,7 +215,7 @@ static Token get_number(char *ptr)
   Token numberToken;
   numberToken.tCode = NUMBER;
   //input num holds current char puts in output num, rest is data checking
-  char inputNum = get_char(*ptr);
+  char inputNum = get_char(ptr);
   int outputNum = inputNum;
   float floatNum = (float) outputNum;
 
