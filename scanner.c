@@ -105,7 +105,6 @@ BOOLEAN get_source_line(char source_buffer[])
 }
 Token* get_token()
 {
-    printf("get_token called");
     char ch; //This can be the current character you are examining during scanning.
     char token_string[MAX_TOKEN_STRING_LENGTH]; //Store your token here as you build it.
     char *token_ptr = &token_string[0]; //write some code to point this to the beginning of token_string
@@ -113,10 +112,8 @@ Token* get_token()
     int char_code;
     Token *tkn_PTR;
     tkn_PTR = (Token *)malloc(sizeof(*tkn_PTR)); // dynamically allocate memory for a new token
-    printf("get_token - 1");
     skip_blanks(token_ptr);
         //1.  Skip past all of the blanks
-    printf("blanks skipped");
     ch = get_char(token_ptr);
     char_code = char_table[(int) ch];
     if (char_code == QUOTE)
