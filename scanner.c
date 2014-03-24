@@ -112,9 +112,10 @@ Token* get_token()
     int char_code;
     Token *tkn_PTR;
     tkn_PTR = (Token *)malloc(sizeof(*tkn_PTR)); // dynamically allocate memory for a new token
-    
+    printf("get_token - 1");
     skip_blanks(token_ptr);
         //1.  Skip past all of the blanks
+    printf("blanks skipped");
     ch = get_char(token_ptr);
     char_code = char_table[(int) ch];
     if (char_code == QUOTE)
