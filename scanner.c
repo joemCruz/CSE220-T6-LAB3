@@ -152,6 +152,7 @@ static char get_char(char *ptr)
         ptr = &current_line_buffer[0]; // Set pointer to beginning of new line buffer
     }
     ch = *ptr;
+    printf("First char is: %c", ch);
     return ch;
 
 }
