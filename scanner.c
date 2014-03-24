@@ -284,7 +284,7 @@ static Token get_special(char *ptr)
 {
     char ch = get_char(ptr);
     Token tokie;
-    next_ch = get_char(ptr+1);
+    tokie.(*stringValue) = ch;
     switch(ch){
 	case '^':
 	    tokie.tCode = UPARROW;
@@ -314,8 +314,11 @@ static Token get_special(char *ptr)
 	    tokie.tCode = RBRACKET;
 	    break;
 	case ':':
-	    if(get_char(ptr++) == '='){
-		tokie.tCode = COLONEQUAL;}
+	    if(get_char(ptr++) == '=')
+        {
+          tokie.tCode = COLONEQUAL;
+          tokie.(*stringValue)++ = '=';
+        }
 	    else{
 		tokie.tCode = COLON;
 		ptr--;}
@@ -325,17 +328,26 @@ static Token get_special(char *ptr)
 	    break;
 	case '<':
 	    ch = get_char(ptr++);
-	    if(ch  == '>'){
-		tokie.tCode = NE;}
-	    else if(ch == '='){
-		tokie.tCode = LE;}
+	    if(ch  == '>')
+      {
+        tokie.tCode = NE;
+        tokie.(*stringValue)++ = ch;
+      }
+	    else if(ch == '=')
+        {
+          tokie.tCode = LE;
+          tokie.(*stringValue)++ = ch;
+        }
 	    else{
 		tokie.tCode = LT;
 		ptr--;}
 	    break;
 	case '>':
-	    if(get_char(ptr++) == '='){
-		tokie.tCode = GE;}
+	    if(get_char(ptr++) == '=')
+        {
+          tokie.tCode = GE;
+          tokie.(*stringValue)++ = ch;
+        }
 	    else{
 		tokie.tCode = GT;
 		ptr--;}		
@@ -344,8 +356,11 @@ static Token get_special(char *ptr)
 	    tokie.tCode = COMMA;
 	    break;
 	case '.':
-	    if(get_char(ptr++) == '.'){
-		tokie.tCode = DOTDOT;}
+	    if(get_char(ptr++) == '.')
+        {
+          tokie.tCode = DOTDOT;
+          tokie.(*stringValue)++ = ch;
+        }
 	    else{
 		tokie.tCode = PERIOD;
 		ptr--;}
@@ -354,7 +369,7 @@ static Token get_special(char *ptr)
 	    tokie.tCode = SLASH;
 	    break;
 	}
-	tokie.stringValue = SYMBOL_STRINGS[tokie.tCode];
+	
 	return tokie;
 }
 
