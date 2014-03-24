@@ -190,14 +190,14 @@ static Token get_word(char *ptr)
     
     for (int i = 0; isalpha(curChar) || isdigit((curChar)); i++) // Continue until a nonalphanumeric character is found
     {
-        token_string[i]  = curChar;
+	token_string[i]  = curChar;
         ptr++;
         curChar = get_char(ptr);
         length = i;
     }
 
     downshift_word(token_string, length);
-    
+    printf("Length: %i",length);
     if (!is_reserved_word(token_string, length, &tCode))
       returnWord.tCode = IDENTIFIER;
     else
@@ -283,6 +283,7 @@ static Token get_special(char *ptr)
 {
     char ch = get_char(ptr);
     Token tokie;
+	printf("%c",ch);
     *(tokie.stringValue) = ch;
     switch(ch){
 	case '^':
@@ -383,6 +384,7 @@ static BOOLEAN is_reserved_word(char word[], int length, TokenCode *resCode)
 {
   char *curRW;
   BOOLEAN disc;
+  printf("Length: %i",length);
   for (int i = 0; rw_table[length-2][i].token_code != 0; i++)
   {
     curRW = ( (char*) rw_table[length-2][i].string);

@@ -11,29 +11,30 @@
 #include "print.h"
 #include "scanner.h"
 
-FILE *init_lister(const char *name, char source_file_name[], char dte[]);
+FILE *init_lister(const char *, char source_file_name[], char dte[]);
 void quit_scanner(FILE *src_file, Token *list);
 void add_token_to_list(Token *list, Token *new_token);
 
 int main(int argc, const char *argv[])
 {
-    Token *token;
-    Token *token_list; //This needs to be implemented as a linked list in scanner.h.
+   Token *token;
+   // Token *token_list; //This needs to be implemented as a linked list in scanner.h.
     char source_name[MAX_FILE_NAME_LENGTH];
     char date[DATE_STRING_LENGTH];
     FILE *source_file;
-    source_file = init_lister(argv[1], source_name, date);
+source_file = init_lister(argv[1], source_name, date);
+	printf("%s",argv[1]);
     init_scanner(source_file, source_name, date);
-    
+    printf("%s",argv[1]);
     do
     {
         token = get_token();
-        add_token_to_list(token_list, token);
+       // add_token_to_list(token_list, token);
         print_token(token);
     }
     while ((* token).tCode != END_OF_FILE);
     
-    quit_scanner(source_file, token_list);
+    //quit_scanner(source_file, token_list);
     return 0;
 }
 void add_token_to_list(Token *list, Token *new_token)
@@ -69,11 +70,11 @@ FILE *init_lister(const char *name, char source_file_name[], char dte[])
     timeStuff = localtime(&timer);
     //turns timeSuff struct into ascii timeStr
     timeStr = asctime(timeStuff);
+	printf("%s",dte);
     strcpy(dte,timeStr);
-//*******************************************************************
     //file stuff
-        FILE *file;
-    strcpy(source_file_name,name);
+	        FILE *file;
+	    strcpy(source_file_name,name);
     file = fopen(name,"r");
         return file;
 }
