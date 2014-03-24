@@ -140,9 +140,9 @@ static char get_char(char *ptr)
      set the character ch to EOF and leave the function.
      */
      char ch;
-     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH];
+     static char current_line_buffer[MAX_SOURCE_LINE_LENGTH] = {NULL};
 
-     if (ptr == &current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer == NULL)
+     if (ptr == &current_line_buffer[MAX_SOURCE_LINE_LENGTH] || current_line_buffer[0] == NULL)
      {
         if (!get_source_line(current_line_buffer))
             {
@@ -194,6 +194,7 @@ static Token get_word(char *ptr)
         ptr++;
         curChar = get_char(ptr);
         length = i;
+        printf("Length is: %i",i)
     }
 
     downshift_word(token_string, length);
