@@ -96,6 +96,7 @@ BOOLEAN get_source_line(char source_buffer[])
         ++line_number;
         sprintf(print_buffer, "%4d: %s", line_number, source_buffer);
         print_line(print_buffer, src_name, todays_date);
+	printf("source_buffer: %s",source_buffer);
         return (TRUE);
     }
     else
@@ -115,6 +116,7 @@ Token* get_token()
     skip_blanks(token_ptr);
         //1.  Skip past all of the blanks
     ch = get_char(token_ptr);
+	printf("init char: %c\n",ch);
     char_code = char_table[(int) ch];
     if (char_code == QUOTE)
             toRtrn = get_string(token_ptr);
@@ -146,12 +148,18 @@ static char get_char(char *ptr)
      {
         if (!get_source_line(current_line_buffer))
             {
-                ch = (char) 46; // Assume failure to get next line means there isn't one
+		ch = (char) 46; // Assume failure to get next line means there isn't one
                 return ch; 
             }
-        ptr = current_line_buffer; // Set pointer to beginning of new line buffer
+	printf("current_line_buffer: %s",current_line_buffer);
+	printf("current_line_buffer[0]: %c\n",current_line_buffer[0]);
+	printf("current_line_buffer[1]: %c\n",current_line_buffer[1]);
+	//printf("cur2: %s",current_line_buffer);
+        ptr = &current_line_buffer[0]; // Set pointer to beginning of new line buffer
     }
     ch = *ptr;
+    printf("Char: %c\n",ch);
+
     return ch;
 
 }
@@ -194,11 +202,11 @@ static Token get_word(char *ptr)
         ptr++;
         curChar = get_char(ptr);
         length = i;
-        printf("Length is: %i",i);
+        printf("Length is: %i\n",i);
     }
 
     downshift_word(token_string, length);
-    printf("Length: %i",length);
+    printf("Length: %i\n",length);
     if (!is_reserved_word(token_string, length, &tCode))
       returnWord.tCode = IDENTIFIER;
     else
