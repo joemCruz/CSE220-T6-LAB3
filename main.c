@@ -5,6 +5,10 @@
 //  Created by Bryce Holton.
 //  Copyright (c) 2014 Bryce Holton. All rights reserved.
 //
+// Group 6
+// Terry Ulery
+// Kristen Tourek
+// Joseph Cruz
 
 #include <stdio.h>
 #include "common.h"
